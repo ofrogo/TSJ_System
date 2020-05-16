@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="oplata_tsj@127.0.0.1" uuid="d093c4cc-9c5f-44ee-9f78-f82d8741d510">
+      <driver-ref>sqlserver.jtds</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>net.sourceforge.jtds.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:jtds:sqlserver://127.0.0.1:1433/oplata_tsj;instance=MSSQLSERVER</jdbc-url>
+    </data-source>
+  </component>
+</project>

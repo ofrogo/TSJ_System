@@ -7,7 +7,7 @@ using Entities;
 
 namespace DistrictDAL
 {
-    public class DistrictDao : IDistrictDao
+    public class DistrictDao : IDao<District>
     {
         
 

@@ -1,15 +1,15 @@
 ﻿namespace Entities
 {
-    public class HouseCounter
+    public class FloatCounter
     {
-        public string Id { get; set; }
+        public string IdOwner { get; set; }
         public int Water { get; set; }
         public int Gas { get; set; }
         public int Electricity { get; set; }
 
-        public HouseCounter(string id, int water, int gas, int electricity)
+        public FloatCounter(string idOwner, int water, int gas, int electricity)
         {
-            Id = id;
+            IdOwner = idOwner;
             Water = water;
             Gas = gas;
             Electricity = electricity;

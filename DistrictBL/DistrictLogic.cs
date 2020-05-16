@@ -8,7 +8,7 @@ namespace DistrictBL
 {
     public class DistrictLogic : IDistrictBl
     {
-        private IDistrictDao _districtDao;
+        private readonly IDao<District> _districtDao;
         public DistrictLogic()
         {
             _districtDao = new DistrictDao();
