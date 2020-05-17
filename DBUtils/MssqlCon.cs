@@ -7,7 +7,7 @@ namespace DBUtils
     {
         private static string _connectionString;
 
-        private static void Build(string dataSource, string db)
+        public static void Build(string dataSource, string db)
         {
             _connectionString = $"Data Source={dataSource};Initial Catalog={db};Integrated Security=True";
         }
