@@ -7,11 +7,11 @@ using Entities;
 
 namespace ManageCompanyDAL
 {
-    public class ManageCompanyDao : IDao<ManаgeCompany>
+    public class ManageCompanyDao : IDao<ManageCompany>
     {
-        public IEnumerable<ManаgeCompany> GetAll()
+        public IEnumerable<ManageCompany> GetAll()
         {
-            var result = new List<ManаgeCompany>();
+            var result = new List<ManageCompany>();
             using (var connection = MssqlCon.GetDbConnection())
             {
                 const string sql = "select id_name, fsl_owner, office_address, count_house from manage_company";
@@ -25,7 +25,7 @@ namespace ManageCompanyDAL
                     var fslOwner = (string) reader["fsl_owner"];
                     var officeAddress = (string) reader["office_address"];
                     var countHouse = (int) reader["count_house"];
-                    var temp = new ManаgeCompany(idName, fslOwner, officeAddress, countHouse);
+                    var temp = new ManageCompany(idName, fslOwner, officeAddress, countHouse);
                     result.Add(temp);
                 }
             }
@@ -33,7 +33,7 @@ namespace ManageCompanyDAL
             return result;
         }
 
-        public int Add(ManаgeCompany T)
+        public int Add(ManageCompany T)
         {
             using (var connection = MssqlCon.GetDbConnection())
             {

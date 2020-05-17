@@ -6,7 +6,7 @@ using Entities;
 
 namespace DistrictBL
 {
-    public class DistrictLogic : IDistrictBl
+    public class DistrictLogic : IBl<District>
     {
         private readonly IDao<District> _districtDao;
         public DistrictLogic()
@@ -22,13 +22,13 @@ namespace DistrictBL
         public string Delete(string id)
         {
             var res = _districtDao.Delete(id);
-            return res > 0 ? $"Было удалено {res} строк." : "Произошла ошибка при удалении.";
+            return res >= 0 ? $"Было удалено {res} строк." : "Произошла ошибка при удалении.";
         }
 
         public string Add(District district)
         {
             var res = _districtDao.Add(district);
-            return res > 0 ? $"Было добавлено {res} строк." : "Произошла ошибка при добавлении.";
+            return res >= 0 ? $"Было добавлено {res} строк." : "Произошла ошибка при добавлении.";
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace Entities
 {
-    public class ManаgeCompany
+    public class ManageCompany
     {
-        public ManаgeCompany(string idName, string fslOwner, string officeAddress, int countHouse)
+        public ManageCompany(string idName, string fslOwner, string officeAddress, int countHouse)
         {
             IdName = idName;
             FslOwner = fslOwner;

@@ -4,11 +4,11 @@
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{55441D60-3511-4B5B-B3B1-D0ED0494109E}</ProjectGuid>
+        <ProjectGuid>{5D25312C-E3A9-4F0A-BB6B-0D7845651EA8}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>AbstractBLL</RootNamespace>
-        <AssemblyName>AbstractBLL</AssemblyName>
+        <RootNamespace>TsjServiceBL</RootNamespace>
+        <AssemblyName>TsjServiceBL</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -38,13 +38,25 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="IDistrictBl.cs" />
+        <Compile Include="TsjServiceLogic.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\AbstractBL\AbstractBL.csproj">
+        <Project>{55441d60-3511-4b5b-b3b1-d0ed0494109e}</Project>
+        <Name>AbstractBL</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\AbstractDAL\AbstractDAL.csproj">
+        <Project>{9817f98b-bfaa-4fd9-b5d7-65947a3635da}</Project>
+        <Name>AbstractDAL</Name>
+      </ProjectReference>
       <ProjectReference Include="..\Entities\Entities.csproj">
         <Project>{f4ced12f-bb30-4800-9b14-1aa76ac5c9ab}</Project>
         <Name>Entities</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\TsjServiceDAL\TsjServiceDAL.csproj">
+        <Project>{460f3a9f-f6a0-47ad-8cdc-5372fecaa17b}</Project>
+        <Name>TsjServiceDAL</Name>
       </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
