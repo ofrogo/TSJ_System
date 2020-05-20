@@ -1,8 +1,10 @@
-﻿namespace Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Entities
 {
     public class Jilez
     {
-        public string PassportId { get; set; }
+        [Required] [StringLength(6)] public string PassportId { get; set; }
         public string Fsl { get; set; }
         public int NumberFlat { get; set; }
         public string HouseAddress { get; set; }

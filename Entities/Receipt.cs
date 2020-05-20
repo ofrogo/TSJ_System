@@ -11,6 +11,15 @@ namespace Entities
         public int Debt { get; set; }
         public int Balance { get; set; }
 
+        public Receipt(string idBill, DateTime billDate, int amount, int debt, int balance)
+        {
+            IdBill = idBill;
+            BillDate = billDate;
+            Amount = amount;
+            Debt = debt;
+            Balance = balance;
+        }
+        
         public Receipt(int id, string idBill, DateTime billDate, int amount, int debt, int balance)
         {
             Id = id;

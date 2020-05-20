@@ -8,13 +8,18 @@ namespace HouseCounterBL
 {
     public class HouseCounterLogic : IBl<HouseCounter>
     {
-        private readonly IDao<HouseCounter> _dao;
+        private readonly HouseCounterDao _dao;
 
         public HouseCounterLogic()
         {
-            _dao = new HouseCounterDao();;
+            _dao = new HouseCounterDao();
         }
-        
+
+        public HouseCounter GetById(string id)
+        {
+            return _dao.GetById(id);
+        }
+
         public List<HouseCounter> GetAll()
         {
             return (List<HouseCounter>) _dao.GetAll();

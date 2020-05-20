@@ -9,6 +9,26 @@ namespace JilezDAL
 {
     public class JilezDao : IDao<Jilez>
     {
+        public Jilez GetById(string id)
+        {
+            using (var connection = MssqlCon.GetDbConnection())
+            {
+                const string sql =
+                    "select fsl, passport_id, number_flat, house_address from jilez where passport_id=@id";
+                var cmd = new SqlCommand(sql, connection);
+                cmd.Parameters.AddWithValue("@id", id);
+                connection.Open();
+                var reader = cmd.ExecuteReader();
+                reader.Read();
+
+                var fsl = (string) reader["fsl"];
+                var passportId = (string) reader["passport_id"];
+                var numberFlat = (int) reader["number_flat"];
+                var houseAddress = (string) reader["house_address"];
+                return new Jilez(passportId, fsl, numberFlat, houseAddress);
+            }
+        }
+
         public IEnumerable<Jilez> GetAll()
         {
             var result = new List<Jilez>();

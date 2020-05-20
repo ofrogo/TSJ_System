@@ -9,6 +9,27 @@ namespace HouseDAL
 {
     public class HouseDao : IDao<House>
     {
+        public House GetById(string address)
+        {
+            using (var connection = MssqlCon.GetDbConnection())
+            {
+                connection.Open();
+                const string sql = "select id_address, count_podezd, count_floor, id_district, id_company from house where id_address = @address";
+                var cmd = new SqlCommand(sql, connection);
+                cmd.Parameters.AddWithValue("@address", address);
+                
+                var reader = cmd.ExecuteReader();
+                reader.Read();
+
+                var idAddress = (string) reader["id_address"];
+                var countPodezd = (int) reader["count_podezd"];
+                var countFLoor = (int) reader["count_floor"];
+                var idDistrict = (string) reader["id_district"];
+                var idCompany = (string) reader["id_company"];
+                return new House(idAddress, countPodezd, countFLoor, idDistrict, idCompany);
+            }
+        }
+
         public IEnumerable<House> GetAll()
         {
             var result = new List<House>();
@@ -41,7 +62,8 @@ namespace HouseDAL
                 try
                 {
                     connection.Open();
-                    const string sql = "INSERT INTO house Values (@id_address, @count_podezd, @count_floor, @id_district, @id_company);";
+                    const string sql =
+                        "INSERT INTO house Values (@id_address, @count_podezd, @count_floor, @id_district, @id_company);";
                     var cmd = new SqlCommand(sql, connection);
                     cmd.Parameters.AddWithValue("@id_address", T.IdAddress);
                     cmd.Parameters.AddWithValue("@count_podezd", T.CountPodezd);

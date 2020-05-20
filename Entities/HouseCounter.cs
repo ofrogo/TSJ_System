@@ -1,8 +1,12 @@
-﻿namespace Entities
+﻿
+
+using System.ComponentModel.DataAnnotations;
+
+namespace Entities
 {
     public class HouseCounter
     {
-        public string Id { get; set; }
+        [Required] public string Id { get; set; }
         public int Water { get; set; }
         public int Gas { get; set; }
         public int Electricity { get; set; }

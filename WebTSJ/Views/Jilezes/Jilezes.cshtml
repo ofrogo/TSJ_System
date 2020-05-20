@@ -1,0 +1,125 @@
+﻿@using Entities
+@model System.Collections.Generic.List<Entities.Jilez>
+@{
+    ViewBag.Title = "Jilezes";
+    ViewBag.IsAdmin = (string) TempData.Peek("login") == "admin";
+    if (ViewBag.IsAdmin)
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}
+
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-8">
+            <h1>Список жильцов дома @TempData.Peek("jilezAddress"):</h1>
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapseCounter" aria-expanded="false" aria-controls="collapseCounter">
+                Показание домового счетчика
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseJilezAdd" aria-expanded="false" aria-controls="collapseJilezAdd">
+                Новый жилец
+            </button>
+        </div>
+    </div>
+    <div class="collapse" id="collapseCounter">
+        @if (ViewBag.IsAdmin)
+        {
+            <form class="form-inline" action="/Jilezes/SetHouseCounter" method="post">
+                <div class="form-group mb-2">
+                    <label for="inputNewWaterCount">Вода</label>
+                    <input type="number" class="form-control" id="inputNewWaterCount" name="water" placeholder="@TempData["water"]">
+                </div>
+                <div class="form-group mb-2">
+                    <label for="inputNewGasCount">Газ</label>
+                    <input type="number" class="form-control" id="inputNewGasCount" name="gas" placeholder="@TempData["gas"]">
+                </div>
+                <div class="form-group mb-2">
+                    <label for="inputNewElecCount">Электричество</label>
+                    <input type="number" class="form-control" id="inputNewElecCount" name="electricity" placeholder="@TempData["electricity"]">
+                </div>
+                <button class="btn btn-primary mb-2" type="submit" id="buttonNewCounter">
+                    Добавить новые данные
+                </button>
+            </form>
+        }
+        else
+        {
+            <form class="form-inline">
+                <div class="form-group mb-2">
+                    <label for="inputNewWaterCount">Вода</label>
+                    <input type="number" class="form-control" id="inputNewWaterCount" name="water" readonly="readonly" placeholder="@TempData["water"]">
+                </div>
+                <div class="form-group mb-2">
+                    <label for="inputNewGasCount">Газ</label>
+                    <input type="number" class="form-control" id="inputNewGasCount" name="gas" readonly="readonly" placeholder="@TempData["gas"]">
+                </div>
+                <div class="form-group mb-2">
+                    <label for="inputNewElecCount">Электричество</label>
+                    <input type="number" class="form-control" id="inputNewElecCount" name="electricity" readonly="readonly" placeholder="@TempData["electricity"]">
+                </div>
+               
+            </form>
+        }
+    </div>
+
+
+    <div class="collapse" id="collapseJilezAdd">
+        <form class="form-inline" action="/Jilezes/AddJilez" method="post">
+            <div class="form-group mb-2">
+                <label for="inputNewAddress">Ф. И. О.</label>
+                <input type="text" class="form-control" id="inputNewAddress" name="fsl">
+            </div>
+            <div class="form-group mb-2">
+                <label for="inputNewPodezd">Номер паспорта</label>
+                <input type="number" class="form-control" id="inputNewPodezd" name="passport">
+            </div>
+            <div class="form-group mb-2">
+                <label for="inputNewFloor">Номер квартиры</label>
+                <input type="number" class="form-control" id="inputNewFloor" name="flat">
+            </div>
+            <div class="form-group mb-2">
+                <label for="inputNewDistrict">Адрес</label>
+                <select class="form-control" id="inputNewDistrict" name="address">
+                    @foreach (var d in (List<House>) ViewData["addresses"])
+                    {
+                        <option>@d.IdAddress</option>
+                    }
+                </select>
+            </div>
+            <button class="btn btn-primary mb-2" type="submit" id="buttonNewHouse">
+                Добавить
+            </button>
+        </form>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Ф. И. О.</th>
+            <th scope="col">Номер паспорта</th>
+            <th scope="col">Номер квартиры</th>
+            <th scope="col">Адрес</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.Fsl</td>
+                <td>@c.PassportId</td>
+                <td>@c.NumberFlat</td>
+                <td>@c.HouseAddress</td>
+                <td>@Html.ActionLink("Подробнее", "JilezInfo", "CurrentInfo", new {passport = c.PassportId}, new {@class = "btn btn-outline-primary", @type = "button"})</td>
+                @if (ViewBag.IsAdmin)
+                {
+                    <td>@Html.ActionLink("Удалить", "DeleteJilez", "Jilezes", new {passport = c.PassportId}, new {@class = "btn btn-outline-danger", @type = "button"})</td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

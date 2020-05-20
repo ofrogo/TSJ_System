@@ -9,6 +9,26 @@ namespace HouseCounterDAL
 {
     public class HouseCounterDao : IDao<HouseCounter>
     {
+        public HouseCounter GetById(string id)
+        {
+            if (id == null) throw new ArgumentNullException(nameof(id));
+            using (var connection = MssqlCon.GetDbConnection())
+            {
+                connection.Open();
+                const string sql = "select id, water, gas, electricity from house_counter where id = @id_param";
+                var cmd = new SqlCommand(sql, connection);
+                cmd.Parameters.AddWithValue("@id_param", id);
+                var reader = cmd.ExecuteReader();
+                reader.Read();
+                var idOwner = (string) reader["id"];
+                var water = (int) reader["water"];
+                var gas = (int) reader["gas"];
+                var electricity = (int) reader["electricity"];
+                var result = new HouseCounter(idOwner, water, gas, electricity);
+                return result;
+            }
+        }
+
         public IEnumerable<HouseCounter> GetAll()
         {
             var result = new List<HouseCounter>();

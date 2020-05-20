@@ -1,4 +1,6 @@
-﻿namespace Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Entities
 {
     public class ManageCompany
     {
@@ -10,7 +12,7 @@
             CountHouse = countHouse;
         }
 
-        public string IdName { get; set; }
+        [Required] public string IdName { get; set; }
 
         public string FslOwner { get; set; }
 

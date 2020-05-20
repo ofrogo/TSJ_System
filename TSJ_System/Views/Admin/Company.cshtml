@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Entities.ManageCompany>
+<div class="container">
+    <div>
+        <h1>Список компаний:</h1>
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseCompanyAdd" aria-expanded="false" aria-controls="collapseCompanyAdd">
+            Добавить
+        </button>
+    </div>
+    <div class="collapse" id="collapseCompanyAdd">
+      А тут ифо новой компан
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Ф.И.О. владельца</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">Количество домов</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.IdName</td>
+                <td>@c.FslOwner</td>
+                <td>@c.OfficeAddress</td>
+                <td>@c.CountHouse</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

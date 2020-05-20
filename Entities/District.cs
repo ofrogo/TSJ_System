@@ -1,4 +1,6 @@
-﻿namespace Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Entities
 {
     public class District
     {
@@ -7,6 +9,6 @@
             IdName = idName;
         }
 
-        public string IdName { get; set; }
+        [Required] public string IdName { get; set; }
     }
 }

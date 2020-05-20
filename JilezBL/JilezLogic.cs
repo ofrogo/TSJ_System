@@ -8,11 +8,16 @@ namespace JilezBL
 {
     public class JilezLogic : IBl<Jilez>
     {
-        private readonly IDao<Jilez> _dao;
+        private readonly JilezDao _dao;
 
         public JilezLogic()
         {
             _dao = new JilezDao();
+        }
+
+        public Jilez GetById(string passport)
+        {
+            return _dao.GetById(passport);
         }
 
         public List<Jilez> GetAll()

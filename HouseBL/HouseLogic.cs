@@ -8,13 +8,17 @@ namespace HouseBL
 {
     public class HouseLogic : IBl<House>
     {
-        private readonly IDao<House> _dao;
+        private readonly HouseDao _dao;
 
         public HouseLogic()
         {
             _dao = new HouseDao();
         }
 
+        public House GetById(string id)
+        {
+            return _dao.GetById(id);
+        }
         public List<House> GetAll()
         {
             return (List<House>) _dao.GetAll();

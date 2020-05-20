@@ -1,0 +1,96 @@
+﻿@using Entities
+@model System.Collections.Generic.List<Entities.House>
+
+@{
+    ViewBag.Title = "Houses";
+    ViewBag.IsAdmin = (string) TempData.Peek("login") == "admin";
+    if (ViewBag.IsAdmin)
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}
+
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-8">
+            <h1>Список домов компании @TempData.Peek("companyTitle"):</h1>
+        </div>
+        <div class="col-2"></div>
+        <div class="col">
+            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseHouseAdd" aria-expanded="false" aria-controls="collapseHouseAdd">
+                Новый дом
+            </button>
+        </div>
+    </div>
+    <div class="collapse" id="collapseHouseAdd">
+        <form action="/Houses/AddHouse" method="post">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="inputNewAddress">Адрес</label>
+                    <input type="text" class="form-control" id="inputNewAddress" name="address">
+                </div>
+                <div class="form-group">
+                    <label for="inputNewPodezd">Количество подъездов</label>
+                    <input type="number" class="form-control" id="inputNewPodezd" name="podezd">
+                </div>
+                <div class="form-group">
+                    <label for="inputNewFloor">Количество этажей</label>
+                    <input type="number" class="form-control" id="inputNewFloor" name="floor">
+                </div>
+                <div class="form-group">
+                    <label for="inputNewDistrict">Район</label>
+                    <select class="form-control" id="inputNewDistrict" name="district">
+                        @foreach (var d in (List<District>) ViewData["districts"])
+                        {
+                            <option>@d.IdName</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="inputNewCompany">Компания</label>
+                    <select class="form-control" id="inputNewCompany" name="company">
+                        @foreach (var d in (List<ManageCompany>) ViewData["companies"])
+                        {
+                            <option>@d.IdName</option>
+                        }
+                    </select>
+                </div>
+
+            </div>
+            <button class="btn btn-primary form-control" type="submit" id="buttonNewHouse">
+                Добавить
+            </button>
+        </form>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Адрес</th>
+            <th scope="col">Число подъездов</th>
+            <th scope="col">Число этажей</th>
+            <th scope="col">Район</th>
+            <th scope="col">Компания</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.IdAddress</td>
+                <td>@c.CountPodezd</td>
+                <td>@c.CountFloor</td>
+                <td>@c.IdDistrict</td>
+                <td>@c.IdCompany</td>
+                <td>@Html.ActionLink("Подробнее", "HouseJilez", "Jilezes", new {houseAddress = c.IdAddress}, new {@class = "btn btn-outline-primary", @type = "button"})</td>
+                @if (ViewBag.IsAdmin)
+                {
+                    <td>@Html.ActionLink("Удалить", "DeleteHouse", "Houses",new {address = c.IdAddress}, new {@class = "btn btn-outline-danger", @type = "button"})</td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

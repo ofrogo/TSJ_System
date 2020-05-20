@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    
+}
+
+<form action="/Home/Login" method="post">
+    <div class="form-group">
+        <label for="login">Введите входные данные:</label>
+        <input class="form-control" name="login" aria-describedby="loginHelp">
+        <small id="loginHelp" class="form-text text-muted">Для того чтобы войти как пользователь, введите свои паспортные данные. Если вы хотите войти как администратор, введите "admin"</small>
+    </div>
+    <button type="submit" class="btn btn-outline-primary">Авторизоваться</button>
+</form>

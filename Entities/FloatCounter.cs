@@ -1,8 +1,10 @@
-﻿namespace Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Entities
 {
     public class FloatCounter
     {
-        public string IdOwner { get; set; }
+        [Required] [StringLength(6)] public string IdOwner { get; set; }
         public int Water { get; set; }
         public int Gas { get; set; }
         public int Electricity { get; set; }

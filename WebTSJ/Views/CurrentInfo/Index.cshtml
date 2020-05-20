@@ -1,0 +1,184 @@
+﻿@using Entities
+@model List<WebTSJ.Models.JilezInfoModel>
+
+@{
+    ViewBag.Title = "Information";
+    ViewBag.IsAdmin = (string) TempData.Peek("login") == "admin";
+    if (ViewBag.IsAdmin)
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}
+<div class="row-cols-2">
+    <div class="col">
+        <h1>@TempData["FSL"]</h1>
+    </div>
+    <div class="col">
+        <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapseCounter" aria-expanded="false" aria-controls="collapseCounter">
+            Показание счетчика
+        </button>
+    </div>
+</div>
+
+<div class="collapse" id="collapseCounter">
+        @if (ViewBag.IsAdmin)
+        {
+            <form class="form-inline" action="/CurrentInfo/SetHouseCounter" method="post">
+                <div class="form-group mb-2">
+                    <label for="inputNewWaterCount">Вода</label>
+                    <input type="number" class="form-control" id="inputNewWaterCount" name="water" placeholder="@TempData["water"]">
+                </div>
+                <div class="form-group mb-2">
+                    <label for="inputNewGasCount">Газ</label>
+                    <input type="number" class="form-control" id="inputNewGasCount" name="gas" placeholder="@TempData["gas"]">
+                </div>
+                <div class="form-group mb-2">
+                    <label for="inputNewElecCount">Электричество</label>
+                    <input type="number" class="form-control" id="inputNewElecCount" name="electricity" placeholder="@TempData["electricity"]">
+                </div>
+                <button class="btn btn-primary mb-2" type="submit" id="buttonNewCounter">
+                    Добавить новые данные
+                </button>
+            </form>
+        }
+        else
+        {
+            <form class="form-inline">
+                <div class="form-group mb-2">
+                    <label for="inputNewWaterCount">Вода</label>
+                    <input type="number" class="form-control" id="inputNewWaterCount" name="water" readonly="readonly" placeholder="@TempData["water"]">
+                </div>
+                <div class="form-group mb-2">
+                    <label for="inputNewGasCount">Газ</label>
+                    <input type="number" class="form-control" id="inputNewGasCount" name="gas" readonly="readonly" placeholder="@TempData["gas"]">
+                </div>
+                <div class="form-group mb-2">
+                    <label for="inputNewElecCount">Электричество</label>
+                    <input type="number" class="form-control" id="inputNewElecCount" name="electricity" readonly="readonly" placeholder="@TempData["electricity"]">
+                </div>
+               
+            </form>
+        }
+    </div>
+
+<div class="row">
+    <div class="col-3">
+        <div class="list-group" id="list-tab" role="tablist">
+            @foreach (var m in Model)
+            {
+                <a class="list-group-item list-group-item-action" id="list-@m.IdBill-list" data-toggle="list" href="#list-@m.IdBill" role="tab" aria-controls="@m.IdBill">@m.IdBill</a>
+            }
+        </div>
+        @if (ViewBag.IsAdmin)
+        {
+            <button class="btn btn-outline-success align-content-center" type="button" data-toggle="collapse" data-target="#collapseBill" aria-expanded="false" aria-controls="collapseBill">
+                Добавить данные об оплате
+            </button>
+        }
+    </div>
+    <div class="col-8">
+        <div class="tab-content" id="nav-tabContent">
+            @foreach (var m in Model)
+            {
+                <div class="tab-pane fade" id="list-@m.IdBill" role="tabpanel" aria-labelledby="list-@m.IdBill-list">
+                    <div>
+                        <h5>Номер платежки</h5>
+                        <p>@m.IdBill</p>
+                    </div>
+                    <div>
+                        <h5>Дата</h5>
+                        <p>@m.BillDate.Date</p>
+                    </div>
+                    <div>
+                        <h5>Сумма</h5>
+                        <p>@m.Amount</p>
+                    </div>
+                    <div>
+                        <h5>Долг</h5>
+                        <p>@m.Debt</p>
+                    </div>
+                    <div>
+                        <h5>Баланс</h5>
+                        <p>@m.Balance</p>
+                    </div>
+                    <table class="table table-sm">
+                        <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Название услуги</th>
+                            <th scope="col">Цена</th>
+                            <th scope="col">Количество</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var ts in m.ServicesCount.Keys)
+                        {
+                            <tr>
+                                <th scope="row">-</th>
+                                <td>@ts</td>
+                                <td>@m.ServicePrice[ts]</td>
+                                <td>@m.ServicesCount[ts]</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@if (ViewBag.IsAdmin)
+{
+    <div class="collapse card" id="collapseBill">
+        <form class="row" action="/CurrentInfo/Add" method="post">
+            <div class="col">
+                <label for="inputNewIdBill">Индентификатор счета</label>
+                <input type="text" class="form-control" id="inputNewIdBill" name="idBill">
+            </div>
+            <div class="col">
+                <label for="inputNewDateBill">Дата</label>
+                <input type="date" class="form-control" id="inputNewDateBill" name="dateBill">
+            </div>
+            <div class="col">
+                <label for="inputNewAmount">Сумма к оплате</label>
+                <input type="number" class="form-control" id="inputNewAmount" name="amount">
+            </div>
+            <div class="col">
+                <label for="inputNewDebt">Долг</label>
+                <input type="number" class="form-control" id="inputNewDebt" name="debt">
+            </div>
+            <div class="col">
+                <label for="inputNewDebt">Баланс</label>
+                <input type="number" class="form-control" id="inputNewBalance" name="balance">
+            </div>
+            <table class="table card table-light row">
+                <thead>
+                <tr>
+                    <th scope="col">Название услуги</th>
+                    <th scope="col">Цена</th>
+                    <th scope="col">Количество</th>
+                    <th scope="col">Добавить</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var ts in (List<TsjService>) TempData["TsjServices"])
+                {
+                    <tr>
+                        <td>@ts.IdName</td>
+                        <td>@ts.Price</td>
+                        <td>
+                            <input type="number" id="amount-@ts.IdName" name="amount-@ts.IdName" placeholder="0">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="check-@ts.IdName" name="check-@ts.IdName">
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            <button class="btn btn-primary mb-2" type="submit" id="buttonNewBill">
+                Добавить новые данные
+            </button>
+        </form>
+    </div>
+}

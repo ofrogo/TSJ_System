@@ -1,0 +1,78 @@
+﻿@model System.Collections.Generic.List<Entities.ManageCompany>
+
+@{
+    ViewBag.Title = "Управляющие компании";
+    ViewBag.IsAdmin = (string) TempData.Peek("login") == "admin";
+    if (ViewBag.IsAdmin)
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+
+}
+
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-8">
+            <h1>Список компаний:</h1>
+        </div>
+        <div class="col-2"></div>
+        <div class="col">
+            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseCompanyAdd" aria-expanded="false" aria-controls="collapseCompanyAdd">
+                Новая компания
+            </button>
+        </div>
+    </div>
+    <div class="collapse" id="collapseCompanyAdd">
+        <form action="/Companies/AddCompany" method="post">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="inputNewTitle">Название</label>
+                    <input type="text" class="form-control" id="inputNewTitle" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="inputNewFSL">Владелец</label>
+                    <input type="text" class="form-control" id="inputNewFSL" name="fsl">
+                </div>
+                <div class="form-group">
+                    <label for="inputNewAddress">Адрес</label>
+                    <input type="text" class="form-control" id="inputNewAddress" name="address">
+                </div>
+                <div class="form-group">
+                    <label for="inputNewCount">Число домов</label>
+                    <input type="number" class="form-control" id="inputNewCount" name="count">
+                </div>
+            </div>
+            <button class="btn btn-primary form-control" type="submit" id="buttonNewCompany">
+                Добавить
+            </button>
+        </form>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Ф.И.О. владельца</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">Количество домов</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.IdName</td>
+                <td>@c.FslOwner</td>
+                <td>@c.OfficeAddress</td>
+                <td>@c.CountHouse</td>
+                <td>@Html.ActionLink("Подробнее", "CompanyHouses", "Houses", new {companyTitle = c.IdName}, new {@class = "btn btn-outline-primary", @type = "button"})</td>
+                @if (ViewBag.IsAdmin)
+                {
+                    <td>@Html.ActionLink("Удалить", "DeleteCompany", new {title = c.IdName}, new {@class = "btn btn-outline-danger", @type = "button"})</td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
