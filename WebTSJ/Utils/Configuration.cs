@@ -1,5 +1,6 @@
 ﻿using AbstractBLL;
 using AbstractDAL;
+using AutoMapper;
 using BillBL;
 using BillDAL;
 using DistrictBL;
@@ -50,6 +51,21 @@ namespace WebTSJ.Utils
             Bind<IBl<FloatCounter>>().To<FloatCounterLogic>().InSingletonScope();
             Bind<IBl<HouseCounter>>().To<HouseCounterLogic>().InSingletonScope();
             Bind<IBl<District>>().To<DistrictLogic>().InSingletonScope();
+            
+            var mapperConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<AutoMapperConfig.BillMappingProfile>();
+                cfg.AddProfile<AutoMapperConfig.DistrictMappingProfile>();
+                cfg.AddProfile<AutoMapperConfig.HouseMappingProfile>();
+                cfg.AddProfile<AutoMapperConfig.JilezMappingProfile>();
+                cfg.AddProfile<AutoMapperConfig.ReceiptMappingProfile>();
+                cfg.AddProfile<AutoMapperConfig.FloatCounterMappingProfile>();
+                cfg.AddProfile<AutoMapperConfig.HouseCounterMappingProfile>();
+                cfg.AddProfile<AutoMapperConfig.ListServicesMappingProfile>();
+                cfg.AddProfile<AutoMapperConfig.ManageCompanyMappingProfile>();
+                cfg.AddProfile<AutoMapperConfig.TsjServiceMappingProfile>();
+            });
+            Bind<IMapper>().ToConstructor(c => new Mapper(mapperConfig)).InSingletonScope();
         }
     }
 }

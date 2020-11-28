@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Entities
+namespace WebTSJ.Models
 {
-    public class FloatCounter
+    public class FloatCounterModel
     {
-        public string IdOwner { get; set; }
+        [Required] [StringLength(6)] public string IdOwner { get; set; }
         public int Water { get; set; }
         public int Gas { get; set; }
         public int Electricity { get; set; }
 
-        public FloatCounter(string idOwner, int water, int gas, int electricity)
+        public FloatCounterModel(string idOwner, int water, int gas, int electricity)
         {
             IdOwner = idOwner;
             Water = water;

@@ -1,16 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Entities
+namespace WebTSJ.Models
 {
-    public class ListServices
+    public class ListServicesModel
     {
         public int Id { get; set; }
-        public string IdBill { get; set; }
-        public string IdService { get; set; }
+        [Required] public string IdBill { get; set; }
+        [Required] public string IdService { get; set; }
 
         public int Amount { get; set; }
 
-        public ListServices(int id, string idBill, string idService, int amount)
+        public ListServicesModel(int id, string idBill, string idService, int amount)
         {
             Id = id;
             IdBill = idBill;
@@ -18,7 +18,7 @@ namespace Entities
             Amount = amount;
         }
 
-        public ListServices(string idBill, string idService, int amount)
+        public ListServicesModel(string idBill, string idService, int amount)
         {
             IdBill = idBill;
             IdService = idService;

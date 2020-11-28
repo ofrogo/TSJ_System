@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using AbstractBLL;
+using AutoMapper;
 using BillBL;
 using Entities;
 using FloatCounterBL;
@@ -24,12 +25,15 @@ namespace WebTSJ.Controllers
         private readonly IBl<TsjService> _tsjServiceLogic;
         private readonly IBl<House> _houseLogic;
         private readonly IBl<FloatCounter> _counterLogic;
+        private readonly IMapper _mapper;
 
         public CurrentInfoController()
         {
         }
 
-        public CurrentInfoController(IBl<Jilez> jilezLogic, IBl<Bill> billLogic, IBl<Receipt> receiptLogic, IBl<ListServices> servicesLogic, IBl<TsjService> tsjServiceLogic, IBl<House> houseLogic, IBl<FloatCounter> counterLogic)
+        public CurrentInfoController(IBl<Jilez> jilezLogic, IBl<Bill> billLogic, IBl<Receipt> receiptLogic,
+            IBl<ListServices> servicesLogic, IBl<TsjService> tsjServiceLogic, IBl<House> houseLogic,
+            IBl<FloatCounter> counterLogic, IMapper mapper)
         {
             _jilezLogic = jilezLogic;
             _billLogic = billLogic;
@@ -38,11 +42,12 @@ namespace WebTSJ.Controllers
             _tsjServiceLogic = tsjServiceLogic;
             _houseLogic = houseLogic;
             _counterLogic = counterLogic;
+            _mapper = mapper;
         }
 
         public ActionResult Index()
         {
-            var models = (List<JilezInfoModel>) TempData.Peek("JilezInfo");
+            var models = (IEnumerable<JilezInfoModel>) TempData.Peek("JilezInfo");
             return View(models);
         }
 
@@ -114,8 +119,8 @@ namespace WebTSJ.Controllers
                     select ts).ToDictionary(ts => ts.IdName,
                     ts => Convert.ToInt32(Request.Form["amount-" + ts.IdName]));
 
-            _billLogic.Add(new Bill(idBill, idCompany, idJilez));
-            _receiptLogic.Add(new Receipt(idBill, dateBill, amount, debt, balance));
+            _billLogic.Add(_mapper.Map<Bill>(new BillModel(idBill, idCompany, idJilez)));
+            _receiptLogic.Add(_mapper.Map<Receipt>(new ReceiptModel(idBill, dateBill, amount, debt, balance)));
             foreach (var n in serviceCount)
             {
                 _servicesLogic.Add(new ListServices(idBill, n.Key, n.Value));

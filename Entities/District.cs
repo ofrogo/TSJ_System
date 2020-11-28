@@ -9,6 +9,6 @@ namespace Entities
             IdName = idName;
         }
 
-        [Required] public string IdName { get; set; }
+        public string IdName { get; set; }
     }
 }

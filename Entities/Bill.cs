@@ -4,9 +4,9 @@ namespace Entities
 {
     public class Bill
     {
-        [Required] public string Id { get; set; }
-        [Required] public string IdCompany { get; set; }
-        [Required] public string IdJilez { get; set; }
+        public string Id { get; set; }
+        public string IdCompany { get; set; }
+        public string IdJilez { get; set; }
 
         public Bill(string id, string idCompany, string idJilez)
         {

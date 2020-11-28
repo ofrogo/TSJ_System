@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using AbstractBLL;
+using AutoMapper;
 using Entities;
 using JilezBL;
 
@@ -8,10 +9,12 @@ namespace WebTSJ.Controllers
     public class HomeController : Controller
     {
         private readonly IBl<Jilez> _jilezLogic;
+        private readonly IMapper _mapper;
 
-        public HomeController(IBl<Jilez> jilezLogic)
+        public HomeController(IBl<Jilez> jilezLogic, IMapper mapper)
         {
             _jilezLogic = jilezLogic;
+            _mapper = mapper;
         }
 
         public HomeController()
@@ -39,8 +42,8 @@ namespace WebTSJ.Controllers
                 TempData["login"] = login;
                 return RedirectToAction("JilezInfo", "CurrentInfo", new {passport = login});
             }
-            else
-                return RedirectToAction("Index");
+
+            return RedirectToAction("Index");
         }
     }
 }

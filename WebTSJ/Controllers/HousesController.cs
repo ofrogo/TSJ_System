@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using AbstractBLL;
+using AutoMapper;
 using DistrictBL;
 using Entities;
 using HouseBL;
 using HouseCounterBL;
 using ManageCompanyBL;
+using WebTSJ.Models;
 
 namespace WebTSJ.Controllers
 {
@@ -15,31 +17,34 @@ namespace WebTSJ.Controllers
         private readonly IBl<ManageCompany> _companyLogic;
         private readonly IBl<District> _districtLogic;
         private readonly IBl<HouseCounter> _counterLogic;
+        private readonly IMapper _mapper;
 
         public HousesController()
         {
         }
 
-        public HousesController(IBl<House> houseLogic, IBl<ManageCompany> companyLogic, IBl<District> districtLogic, IBl<HouseCounter> counterLogic)
+        public HousesController(IBl<House> houseLogic, IBl<ManageCompany> companyLogic, IBl<District> districtLogic,
+            IBl<HouseCounter> counterLogic, IMapper mapper)
         {
             _houseLogic = houseLogic;
             _companyLogic = companyLogic;
             _districtLogic = districtLogic;
             _counterLogic = counterLogic;
+            _mapper = mapper;
         }
 
         public ActionResult Houses()
         {
-            ViewData["companies"] = _companyLogic.GetAll();
-            ViewData["districts"] = _districtLogic.GetAll();
-            List<House> houses;
+            ViewData["companies"] = _mapper.Map<IEnumerable<ManageCompanyModel>>(_companyLogic.GetAll());
+            ViewData["districts"] = _mapper.Map<IEnumerable<DistrictModel>>(_districtLogic.GetAll());
+            IEnumerable<HouseModel> houses;
             if (!TempData.ContainsKey("houses"))
             {
-                houses = _houseLogic.GetAll();
+                houses = _mapper.Map<IEnumerable<HouseModel>>(_houseLogic.GetAll());
             }
             else
             {
-                houses = (List<House>) TempData.Peek("houses");
+                houses = (IEnumerable<HouseModel>) TempData.Peek("houses");
             }
             return View(houses);
         }
@@ -47,7 +52,7 @@ namespace WebTSJ.Controllers
         
         public ActionResult CompanyHouses(string companyTitle)
         {
-            var houses = _houseLogic.GetAll();
+            var houses = _mapper.Map<List<HouseModel>>(_houseLogic.GetAll());
             TempData["companyTitle"] = companyTitle;
             TempData["houses"] = houses.FindAll(h => h.IdCompany == companyTitle);
             return RedirectToAction("Houses");

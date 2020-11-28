@@ -2,11 +2,14 @@
 using System.Linq;
 using System.Web.Mvc;
 using AbstractBLL;
+using AutoMapper;
 using Entities;
 using FloatCounterBL;
 using HouseBL;
 using HouseCounterBL;
 using JilezBL;
+using ListServicesBL;
+using WebTSJ.Models;
 
 namespace WebTSJ.Controllers
 {
@@ -16,32 +19,35 @@ namespace WebTSJ.Controllers
         private readonly IBl<House> _houseLogic;
         private readonly IBl<HouseCounter> _houseCounterLogic;
         private readonly IBl<FloatCounter> _counterLogic;
+        private readonly IMapper _mapper;
 
         public JilezesController()
         {
         }
 
-        public JilezesController(IBl<Jilez> jilezLogic, IBl<House> houseLogic, IBl<HouseCounter> houseCounterLogic, IBl<FloatCounter> counterLogic)
+        public JilezesController(IBl<Jilez> jilezLogic, IBl<House> houseLogic, IBl<HouseCounter> houseCounterLogic, 
+            IBl<FloatCounter> counterLogic, IMapper mapper)
         {
             _jilezLogic = jilezLogic;
             _houseLogic = houseLogic;
             _houseCounterLogic = houseCounterLogic;
             _counterLogic = counterLogic;
+            _mapper = mapper;
         }
 
 
         public ActionResult Jilezes()
         {
            
-            ViewData["addresses"] = _houseLogic.GetAll();
-            List<Jilez> jilezes;
+            ViewData["addresses"] = _mapper.Map<IEnumerable<HouseModel>>(_houseLogic.GetAll());
+            IEnumerable<JilezModel> jilezes;
             if (!TempData.ContainsKey("jilezes"))
             {
-                jilezes = _jilezLogic.GetAll();
+                jilezes = _mapper.Map<IEnumerable<JilezModel>>(_jilezLogic.GetAll());
             }
             else
             {
-                jilezes = (List<Jilez>) TempData.Peek("jilezes");
+                jilezes = (IEnumerable<JilezModel>) TempData.Peek("jilezes");
             }
 
             return View(jilezes);
@@ -64,10 +70,10 @@ namespace WebTSJ.Controllers
 
         public ActionResult HouseJilez(string houseAddress)
         {
-            var jilezes = _jilezLogic.GetAll();
+            var jilezes = _mapper.Map<List<JilezModel>>(_jilezLogic.GetAll());
             TempData["jilezAddress"] = houseAddress;
             TempData["jilezes"] = jilezes.FindAll(j => j.HouseAddress == houseAddress);
-            var counter = _houseCounterLogic.GetById(houseAddress);
+            var counter = _mapper.Map<HouseCounterModel>(_houseCounterLogic.GetById(houseAddress));
             TempData["water"] = counter.Water;
             TempData["gas"] = counter.Gas;
             TempData["electricity"] = counter.Electricity;

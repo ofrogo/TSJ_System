@@ -1,5 +1,5 @@
-﻿@using Entities
-@model System.Collections.Generic.List<Entities.Jilez>
+﻿@using WebTSJ.Models
+@model IEnumerable<JilezModel>
 @{
     ViewBag.Title = "Jilezes";
     ViewBag.IsAdmin = (string) TempData.Peek("login") == "admin";
@@ -84,7 +84,7 @@
             <div class="form-group mb-2">
                 <label for="inputNewDistrict">Адрес</label>
                 <select class="form-control" id="inputNewDistrict" name="address">
-                    @foreach (var d in (List<House>) ViewData["addresses"])
+                    @foreach (var d in (IEnumerable<HouseModel>) ViewData["addresses"])
                     {
                         <option>@d.IdAddress</option>
                     }

@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Entities
+namespace WebTSJ.Models
 {
-    public class ManageCompany
+    public class ManageCompanyModel
     {
-        public ManageCompany(string idName, string fslOwner, string officeAddress, int countHouse)
+        public ManageCompanyModel(string idName, string fslOwner, string officeAddress, int countHouse)
         {
             IdName = idName;
             FslOwner = fslOwner;
@@ -12,7 +12,7 @@ namespace Entities
             CountHouse = countHouse;
         }
 
-        public string IdName { get; set; }
+        [Required] public string IdName { get; set; }
 
         public string FslOwner { get; set; }
 

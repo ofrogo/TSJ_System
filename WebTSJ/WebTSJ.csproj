@@ -42,6 +42,10 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005">
+          <HintPath>..\packages\AutoMapper.10.0.0\lib\net461\AutoMapper.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="Microsoft.CSharp" />
         <Reference Include="Ninject, Version=3.3.3.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7">
           <HintPath>..\packages\Ninject.3.3.3\lib\net45\Ninject.dll</HintPath>
@@ -129,6 +133,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="App_Start\AutoMapperConfig.cs" />
         <Compile Include="App_Start\BundleConfig.cs" />
         <Compile Include="App_Start\FilterConfig.cs" />
         <Compile Include="App_Start\RouteConfig.cs" />
@@ -141,7 +146,17 @@
         <Compile Include="Global.asax.cs">
             <DependentUpon>Global.asax</DependentUpon>
         </Compile>
+        <Compile Include="Models\BillModel.cs" />
+        <Compile Include="Models\DistrictModel.cs" />
+        <Compile Include="Models\FloatCounterModel.cs" />
+        <Compile Include="Models\HouseCounterModel.cs" />
+        <Compile Include="Models\HouseModel.cs" />
         <Compile Include="Models\JilezInfoModel.cs" />
+        <Compile Include="Models\JilezModel.cs" />
+        <Compile Include="Models\ListServicesModel.cs" />
+        <Compile Include="Models\ManageCompanyModel.cs" />
+        <Compile Include="Models\ReceiptModel.cs" />
+        <Compile Include="Models\TsjServiceModel.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Utils\Configuration.cs" />
     </ItemGroup>
