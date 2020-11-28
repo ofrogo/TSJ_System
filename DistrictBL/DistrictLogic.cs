@@ -9,10 +9,12 @@ namespace DistrictBL
     public class DistrictLogic : IBl<District>
     {
         private readonly IDao<District> _districtDao;
-        public DistrictLogic()
+
+        public DistrictLogic(IDao<District> districtDao)
         {
-            _districtDao = new DistrictDao();
+            _districtDao = districtDao;
         }
+
 
         public List<District> GetAll()
         {
@@ -23,6 +25,11 @@ namespace DistrictBL
         {
             var res = _districtDao.Delete(id);
             return res >= 0 ? $"Было удалено {res} строк." : "Произошла ошибка при удалении.";
+        }
+
+        public District GetById(string id)
+        {
+            throw new System.NotImplementedException();
         }
 
         public string Add(District district)

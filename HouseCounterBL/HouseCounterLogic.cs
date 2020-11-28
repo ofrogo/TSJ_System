@@ -10,9 +10,9 @@ namespace HouseCounterBL
     {
         private readonly HouseCounterDao _dao;
 
-        public HouseCounterLogic()
+        public HouseCounterLogic(HouseCounterDao dao)
         {
-            _dao = new HouseCounterDao();
+            _dao = dao;
         }
 
         public HouseCounter GetById(string id)

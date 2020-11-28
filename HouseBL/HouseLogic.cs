@@ -10,9 +10,9 @@ namespace HouseBL
     {
         private readonly HouseDao _dao;
 
-        public HouseLogic()
+        public HouseLogic(HouseDao dao)
         {
-            _dao = new HouseDao();
+            _dao = dao;
         }
 
         public House GetById(string id)

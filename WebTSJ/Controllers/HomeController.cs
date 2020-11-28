@@ -1,11 +1,22 @@
 ﻿using System.Web.Mvc;
+using AbstractBLL;
+using Entities;
 using JilezBL;
 
 namespace WebTSJ.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly JilezLogic _jilezLogic = new JilezLogic();
+        private readonly IBl<Jilez> _jilezLogic;
+
+        public HomeController(IBl<Jilez> jilezLogic)
+        {
+            _jilezLogic = jilezLogic;
+        }
+
+        public HomeController()
+        {
+        }
 
 
         public ActionResult Index()
@@ -26,7 +37,7 @@ namespace WebTSJ.Controllers
             if (jilezes.Exists(jilez => jilez.PassportId == login))
             {
                 TempData["login"] = login;
-                return RedirectToAction("AllCompanies", "Companies");
+                return RedirectToAction("JilezInfo", "CurrentInfo", new {passport = login});
             }
             else
                 return RedirectToAction("Index");

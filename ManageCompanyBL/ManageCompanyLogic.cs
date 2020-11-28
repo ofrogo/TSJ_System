@@ -10,11 +10,11 @@ namespace ManageCompanyBL
     {
         private readonly IDao<ManageCompany> _dao;
 
-        public ManageCompanyLogic()
+        public ManageCompanyLogic(IDao<ManageCompany> dao)
         {
-            _dao = new ManageCompanyDao();
+            _dao = dao;
         }
-        
+
         public List<ManageCompany> GetAll()
         {
             return (List<ManageCompany>) _dao.GetAll();
@@ -30,6 +30,11 @@ namespace ManageCompanyBL
         {
             var res = _dao.Delete(id);
             return res >= 0 ? $"Было удалено {res} строк." : "Произошла ошибка при удалении.";
+        }
+
+        public ManageCompany GetById(string id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

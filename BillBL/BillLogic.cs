@@ -10,9 +10,9 @@ namespace BillBL
     {
         private readonly IDao<Bill> _dao;
 
-        public BillLogic()
+        public BillLogic(IDao<Bill> dao)
         {
-            _dao = new BillDao();
+            _dao = dao;
         }
 
         public List<Bill> GetAll()
@@ -30,6 +30,11 @@ namespace BillBL
         {
             var res = _dao.Delete(id);
             return res >= 0 ? $"Было удалено {res} строк." : "Произошла ошибка при удалении.";
+        }
+
+        public Bill GetById(string id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

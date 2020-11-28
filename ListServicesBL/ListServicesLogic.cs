@@ -10,9 +10,9 @@ namespace ListServicesBL
     {
         private readonly IDao<ListServices> _dao;
 
-        public ListServicesLogic()
+        public ListServicesLogic(IDao<ListServices> dao)
         {
-            _dao = new ListServicesDao();
+            _dao = dao;
         }
         
         public List<ListServices> GetAll()
@@ -30,6 +30,11 @@ namespace ListServicesBL
         {
             var res = _dao.Delete(id);
             return res >= 0 ? $"Было удалено {res} строк." : "Произошла ошибка при удалении.";
+        }
+
+        public ListServices GetById(string id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

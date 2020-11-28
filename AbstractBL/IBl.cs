@@ -7,5 +7,6 @@ namespace AbstractBLL
         List<T> GetAll();
         string Add(T t);
         string Delete(string id);
+        T GetById(string id);
     }
 }

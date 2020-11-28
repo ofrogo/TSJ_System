@@ -10,9 +10,9 @@ namespace ReceiptBL
     {
         private readonly IDao<Receipt> _dao;
 
-        public ReceiptLogic()
+        public ReceiptLogic(IDao<Receipt> dao)
         {
-            _dao = new ReceiptDao();
+            _dao = dao;
         }
         
         public List<Receipt> GetAll()
@@ -30,6 +30,11 @@ namespace ReceiptBL
         {
             var res = _dao.Delete(id);
             return res >= 0 ? $"Было удалено {res} строк." : "Произошла ошибка при удалении.";
+        }
+
+        public Receipt GetById(string id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using AbstractBLL;
 using DistrictBL;
 using Entities;
 using HouseBL;
@@ -10,10 +11,22 @@ namespace WebTSJ.Controllers
 {
     public class HousesController : Controller
     {
-        private readonly HouseLogic _houseLogic = new HouseLogic();
-        private readonly ManageCompanyLogic _companyLogic = new ManageCompanyLogic();
-        private readonly DistrictLogic _districtLogic = new DistrictLogic();
-        private readonly HouseCounterLogic _counterLogic = new HouseCounterLogic();
+        private readonly IBl<House> _houseLogic;
+        private readonly IBl<ManageCompany> _companyLogic;
+        private readonly IBl<District> _districtLogic;
+        private readonly IBl<HouseCounter> _counterLogic;
+
+        public HousesController()
+        {
+        }
+
+        public HousesController(IBl<House> houseLogic, IBl<ManageCompany> companyLogic, IBl<District> districtLogic, IBl<HouseCounter> counterLogic)
+        {
+            _houseLogic = houseLogic;
+            _companyLogic = companyLogic;
+            _districtLogic = districtLogic;
+            _counterLogic = counterLogic;
+        }
 
         public ActionResult Houses()
         {

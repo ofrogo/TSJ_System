@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using AbstractBLL;
 using BillBL;
 using Entities;
 using FloatCounterBL;
@@ -16,13 +17,28 @@ namespace WebTSJ.Controllers
 {
     public class CurrentInfoController : Controller
     {
-        private readonly JilezLogic _jilezLogic = new JilezLogic();
-        private readonly BillLogic _billLogic = new BillLogic();
-        private readonly ReceiptLogic _receiptLogic = new ReceiptLogic();
-        private readonly ListServicesLogic _servicesLogic = new ListServicesLogic();
-        private readonly TsjServiceLogic _tsjServiceLogic = new TsjServiceLogic();
-        private readonly HouseLogic _houseLogic = new HouseLogic();
-        private readonly FloatCounterLogic _counterLogic = new FloatCounterLogic();
+        private readonly IBl<Jilez> _jilezLogic;
+        private readonly IBl<Bill> _billLogic;
+        private readonly IBl<Receipt> _receiptLogic;
+        private readonly IBl<ListServices> _servicesLogic;
+        private readonly IBl<TsjService> _tsjServiceLogic;
+        private readonly IBl<House> _houseLogic;
+        private readonly IBl<FloatCounter> _counterLogic;
+
+        public CurrentInfoController()
+        {
+        }
+
+        public CurrentInfoController(IBl<Jilez> jilezLogic, IBl<Bill> billLogic, IBl<Receipt> receiptLogic, IBl<ListServices> servicesLogic, IBl<TsjService> tsjServiceLogic, IBl<House> houseLogic, IBl<FloatCounter> counterLogic)
+        {
+            _jilezLogic = jilezLogic;
+            _billLogic = billLogic;
+            _receiptLogic = receiptLogic;
+            _servicesLogic = servicesLogic;
+            _tsjServiceLogic = tsjServiceLogic;
+            _houseLogic = houseLogic;
+            _counterLogic = counterLogic;
+        }
 
         public ActionResult Index()
         {

@@ -10,9 +10,9 @@ namespace FloatCounterBL
     {
         private readonly IDao<FloatCounter> _dao;
 
-        public FloatCounterLogic()
+        public FloatCounterLogic(IDao<FloatCounter> dao)
         {
-            _dao = new FloatCounterDao();
+            _dao = dao;
         }
         
         public List<FloatCounter> GetAll()
@@ -30,6 +30,11 @@ namespace FloatCounterBL
         {
             var res = _dao.Delete(id);
             return res >= 0 ? $"Было удалено {res} строк." : "Произошла ошибка при удалении.";
+        }
+
+        public FloatCounter GetById(string id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -10,9 +10,9 @@ namespace JilezBL
     {
         private readonly JilezDao _dao;
 
-        public JilezLogic()
+        public JilezLogic(JilezDao dao)
         {
-            _dao = new JilezDao();
+            _dao = dao;
         }
 
         public Jilez GetById(string passport)

@@ -31,5 +31,10 @@ namespace TsjServiceBL
             var res = _dao.Delete(id);
             return res >= 0 ? $"Было удалено {res} строк." : "Произошла ошибка при удалении.";
         }
+
+        public TsjService GetById(string id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

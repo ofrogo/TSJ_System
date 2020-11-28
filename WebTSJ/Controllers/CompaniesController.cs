@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using AbstractBLL;
 using Entities;
 using ManageCompanyBL;
 
@@ -6,8 +7,17 @@ namespace WebTSJ.Controllers
 {
     public class CompaniesController : Controller
     {
-        private readonly ManageCompanyLogic _companyLogic = new ManageCompanyLogic();
-        
+        private readonly IBl<ManageCompany> _companyLogic;
+
+        public CompaniesController()
+        {
+        }
+
+        public CompaniesController(IBl<ManageCompany> companyLogic)
+        {
+            _companyLogic = companyLogic;
+        }
+
         public ActionResult AllCompanies()
         {
             return View(_companyLogic.GetAll());

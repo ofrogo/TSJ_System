@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using AbstractBLL;
 using Entities;
 using FloatCounterBL;
 using HouseBL;
@@ -11,11 +12,23 @@ namespace WebTSJ.Controllers
 {
     public class JilezesController : Controller
     {
-        private readonly JilezLogic _jilezLogic = new JilezLogic();
-        private readonly HouseLogic _houseLogic = new HouseLogic();
-        private readonly HouseCounterLogic _houseCounterLogic = new HouseCounterLogic();
-        private readonly FloatCounterLogic _counterLogic = new FloatCounterLogic();
-        
+        private readonly IBl<Jilez> _jilezLogic;
+        private readonly IBl<House> _houseLogic;
+        private readonly IBl<HouseCounter> _houseCounterLogic;
+        private readonly IBl<FloatCounter> _counterLogic;
+
+        public JilezesController()
+        {
+        }
+
+        public JilezesController(IBl<Jilez> jilezLogic, IBl<House> houseLogic, IBl<HouseCounter> houseCounterLogic, IBl<FloatCounter> counterLogic)
+        {
+            _jilezLogic = jilezLogic;
+            _houseLogic = houseLogic;
+            _houseCounterLogic = houseCounterLogic;
+            _counterLogic = counterLogic;
+        }
+
 
         public ActionResult Jilezes()
         {
